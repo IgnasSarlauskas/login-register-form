@@ -76,10 +76,12 @@ function validate_fields_match($filtered_input, &$form, $params) {
 
 function validate_login($filtered_input, &$form) {
     $array_users = file_to_array('./data/users.json');
-    foreach ($array_users as $user) {
-        if ($user['email'] === $filtered_input['email'] || $user['password'] === $filtered_input['password']) {
-            $form['fields']['password']['error'] = 'Toks vartotjas jau egzistuoja!';
-            return false;
+    if (!empty($array_users)) {
+        foreach ($array_users as $user) {
+            if ($user['email'] !== $filtered_input['email'] || $user['password'] !== $filtered_input['password']) {
+                $form['fields']['password']['error'] = 'Kazkas cia ne to!';
+                return false;
+            }
         }
     }
     return true;
@@ -89,12 +91,11 @@ function validate_email_unique($field_input, &$field) {
     $array_users = file_to_array('./data/users.json');
     if (!empty($array_users)) {
         foreach ($array_users as $user) {
-            var_dump($user['email']);
             if ($user['email'] === $field_input) {
                 $field['error'] = 'Toks email jau egzistuoja';
                 return false;
             }
         }
-        return true;
     }
+    return true;
 }

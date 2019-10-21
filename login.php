@@ -61,6 +61,7 @@ function form_fail($filtered_input, $form) {
 
 function form_success($filtered_input, $form) {
     $_SESSION['email'] = $filtered_input['email'];
+    var_dump('success');
 }
 
 if (!empty($filtered_input)) {

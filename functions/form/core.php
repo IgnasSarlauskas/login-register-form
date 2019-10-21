@@ -58,12 +58,12 @@ function validate_form($filtered_input, &$form) {
             }
         }
     }
+    
+//    var_dump($success);
 
     if ($success) {
         foreach (($form['validators'] ?? []) as $validator_id => $validator) {
             if (is_array($validator)) {
-//                $params[] = $validator;
-//                var_dump($params);
                 $is_valid = $validator_id($filtered_input, $form, $validator);
             } else {
                 $is_valid = $validator($filtered_input, $form);
@@ -74,7 +74,9 @@ function validate_form($filtered_input, &$form) {
             }
         }
     }
-
+    
+//    var_dump($success);
+     
     if ($success) {
         if (isset($form['callbacks']['success'])) {
             $form['callbacks']['success']($filtered_input, $form);
@@ -84,5 +86,7 @@ function validate_form($filtered_input, &$form) {
             $form['callbacks']['fail']($filtered_input, $form);
         }
     }
+    
     return $success;
+    
 }
