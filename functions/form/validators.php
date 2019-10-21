@@ -83,6 +83,8 @@ function validate_login($filtered_input, &$form) {
                 return false;
             }
         }
+    } else {
+        return false;
     }
     return true;
 }

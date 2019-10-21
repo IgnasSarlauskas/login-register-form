@@ -61,7 +61,7 @@ function form_fail($filtered_input, $form) {
 
 function form_success($filtered_input, $form) {
     $_SESSION['email'] = $filtered_input['email'];
-    var_dump('success');
+    header("Location: index.php"); 
 }
 
 if (!empty($filtered_input)) {
@@ -78,7 +78,9 @@ if (!empty($filtered_input)) {
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
     </head>
     <body>
+        
         <?php include './particles/navigation.php'; ?>
+        <h2 class="centered">Welcome! Please log in!</h2>
         <?php require 'templates/form.tpl.php'; ?>
     </body>
 </html>

@@ -2,11 +2,11 @@
 
     session_start();
     if (isset($_SESSION['email'])) {
-        $h1_text = "Sveiki sugrize \"{$_SESSION['email']}";
+        $h1_text = "Sveiki sugrize \"{$_SESSION['email']}\"";
+    } else {
+        $h2_text = 'Prisijunkite!';
     }
-    
-    $h2_text = 'Prisijunkite!';
-    
+      
 ?>
 <html>
     <head>
@@ -18,7 +18,7 @@
     </head>
     <body>
         <?php include './particles/navigation.php'; ?>
-        <?php if (isset($_SESSION['email'])): ?>
+        <?php if (isset($h1_text)): ?>
             <h1><?php print $h1_text; ?></h2>
         <?php else: ?> 
             <h2><?php print $h2_text; ?></h2>

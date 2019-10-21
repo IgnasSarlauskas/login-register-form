@@ -84,6 +84,8 @@ $filtered_input = get_filtered_input($form);
 function form_success($filtered_input, $form) {
     print 'Successfully registered!';
     update_user($filtered_input);
+    header("Location: login.php");
+
 }
 
 function form_fail($filtered_input, $form) {
@@ -102,7 +104,7 @@ function update_user($filtered_input) {
 if (!empty($filtered_input)) {
     validate_form($filtered_input, $form);
 }
-
+;
 ?>
 <html>
     <head>
