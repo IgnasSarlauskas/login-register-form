@@ -63,43 +63,38 @@ function validate_password($field_input, &$field) {
     }
 }
 
-function validate_team($field_input, &$field) {
-    $teams_array = file_to_array('data/teams.json');
-    if (!empty($teams_array)) {
-        foreach ($teams_array as $team) {
-            if ($field_input === $team['team_name']) {
-                $field['error'] = 'Toks komandos pavadinimas jau yra!';
+function validate_fields_match($filtered_input, &$form, $params) {
+    $reference_value = $filtered_input[$params[0]];
+    foreach ($params as $param) {
+        if ($filtered_input[$param] !== $reference_value) {
+            $form['fields'][$param]['error'] = 'Password didnt match!';
+            return false;
+        }
+    }
+    return true;
+}
+
+function validate_login($filtered_input, &$form) {
+    $array_users = file_to_array('./data/users.json');
+    foreach ($array_users as $user) {
+        if ($user['email'] === $filtered_input['email'] || $user['password'] === $filtered_input['password']) {
+            $form['fields']['password']['error'] = 'Toks vartotjas jau egzistuoja!';
+            return false;
+        }
+    }
+    return true;
+}
+
+function validate_email_unique($field_input, &$field) {
+    $array_users = file_to_array('./data/users.json');
+    if (!empty($array_users)) {
+        foreach ($array_users as $user) {
+            var_dump($user['email']);
+            if ($user['email'] === $field_input) {
+                $field['error'] = 'Toks email jau egzistuoja';
                 return false;
             }
         }
+        return true;
     }
-    return true;
-}
-
-function validate_player($field_input, &$field) {
-    $teams_array = file_to_array('data/teams.json');
-    if (!empty($teams_array)) {
-        foreach ($teams_array as $team) {
-            foreach ($team['players'] as $player) {
-                if ($field_input === $player['nickname']) {
-                    $field['error'] = 'Toks zaidejas jau yra!';
-                    return false;
-                }
-            }
-        }
-    }
-    return true;
-}
-
-function validate_kick($field_input, &$field) {
-    $teams = file_to_array('data/teams.json');
-        foreach ($teams as &$team) {
-            foreach ($team['players'] as &$player) {
-                if ($player['nickname'] === $_SESSION['nickname']) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        }
 }
